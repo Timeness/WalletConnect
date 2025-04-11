@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WalletConnect Launcher</title>
+  <script>
+    async function connect(wallet) {
+      try {
+        const res = await fetch("http://localhost:3000/connect");
+        const data = await res.json();
+        const links = data.deepLinks;
+
+        const selectedLink = links[wallet];
+        if (selectedLink) {
+          window.location.href = selectedLink;
+        } else {
+          alert("Link not found for: " + wallet);
+        }
+      } catch (err) {
+        console.error("Connection Error:", err);
+        alert("Failed to connect");
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    button {
+      margin: 10px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      background: #222;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Connect Wallet</h1>
+  <button onclick="connect('trust')">Trust Wallet</button>
+  <button onclick="connect('metamask')">MetaMask</button>
+  <button onclick="connect('okx')">OKX Wallet</button>
+  <button onclick="connect('inch')">1inch Wallet</button>
+  <button onclick="connect('kraken')">Kraken Wallet</button>
+</body>
+</html>
